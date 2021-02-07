@@ -6,11 +6,12 @@ import javax.persistence.*;
 
 @Entity
 @Builder
+@Getter
+@Setter
 @ToString
 @RequiredArgsConstructor
-@NoArgsConstructor
 @AllArgsConstructor
-public class Dogs {
+public class Dog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
