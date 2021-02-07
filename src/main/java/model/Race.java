@@ -7,6 +7,9 @@ public enum Race {
     GOLDEN_RETRIEVER,
     MOPS,
     DACHSHUND,
-    CHIHUAHUA
-
+    CHIHUAHUA,
+    MONGREL,
+    ROTTWEILER,
+    BERNARDINE,
+    RATTER
 }
