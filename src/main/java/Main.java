@@ -13,20 +13,32 @@ public class Main {
 
         String method;
         do {
-            System.out.println("Podaj polecenie do wykonania: [Add/List/Delete/Update/Quit]");
+            System.out.println("Podaj nr polecenia: " +
+                    "\n 1.Add \n 2.List \n 3.Delete \n " +
+                    "4.Update \n 5.Search by age range " +
+                    "\n 6.Search by race \n 7.Search by pure race and name \n Quit");
             method = scanner.nextLine();
 
-            if (method.equalsIgnoreCase("Add")){
+            if (method.equalsIgnoreCase("1")){
                 addDogs(dao, scanner);
             }
-            if (method.equalsIgnoreCase("List")){
+            if (method.equalsIgnoreCase("2")){
                 listDogs(dao);
             }
-            if (method.equalsIgnoreCase("Update")){
+            if (method.equalsIgnoreCase("3")){
                 updateDog(dao, scanner);
             }
-            if (method.equalsIgnoreCase("Delete")){
+            if (method.equalsIgnoreCase("4")){
                 deleteDog(dao, scanner);
+            }
+            if (method.equalsIgnoreCase("5")){
+                findByAge(dao, scanner);
+            }
+            if (method.equalsIgnoreCase("6")){
+                findByRace(dao, scanner);
+            }
+            if (method.equalsIgnoreCase("7")){
+                findByPRaceAndName(dao, scanner);
             }
 
 
@@ -95,5 +107,47 @@ public class Main {
             dao.saveOrUpdate(dog1);
         } else
             System.err.println("ERROR, pies z takim ID nie istnieje");
+    }
+
+    private static void findByAge(DogDao dao, Scanner scanner){
+        System.out.println("Podaj zakres wieku szukanych psów: ageFrom oraz ageTo");
+
+        String line = scanner.nextLine();
+        int ageFrom = Integer.parseInt(line.split(" ")[0]);
+        int ageTo = Integer.parseInt(line.split(" ")[1]);
+
+        System.out.println("Znalezione psy: ");
+        dao.findByAgeBetween(ageFrom, ageTo).forEach(System.out::println);
+    }
+
+    private static void findByRace(DogDao dao, Scanner scanner){
+        System.out.println("Podaj nazwę rasy: LABRADOR,\n" +
+                "    HUSKY,\n" +
+                "    GOLDEN_RETRIEVER,\n" +
+                "    MOPS,\n" +
+                "    DACHSHUND,\n" +
+                "    CHIHUAHUA,\n" +
+                "    MONGREL,\n" +
+                "    ROTTWEILER,\n" +
+                "    BERNARDINE,\n" +
+                "    RATTER");
+
+        String line = scanner.nextLine();
+
+        Race race = Race.valueOf(line.toUpperCase());
+
+        System.out.println("Znalezione psy: ");
+        dao.findByRaceName(race).forEach(System.out::println);
+    }
+
+    private static void findByPRaceAndName(DogDao dao, Scanner scanner){
+        System.out.println("Podaj czy rasa czysta: true or false; oraz imię psa");
+
+        String line = scanner.nextLine();
+        boolean pureRace = Boolean.parseBoolean(line.split(" ")[0]);
+        String name = line.split(" ")[1];
+
+        System.out.println("Znaleziony psy: ");
+        dao.findByPureRaceAndName(pureRace, name).forEach(System.out::println);
     }
 }

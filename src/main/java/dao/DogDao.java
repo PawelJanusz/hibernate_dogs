@@ -2,6 +2,7 @@ package dao;
 
 import launch.HibernateUtil;
 import model.Dog;
+import model.Race;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,8 +18,8 @@ import java.util.Optional;
 
 public class DogDao {
 
-    SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-    Transaction transaction = null;
+    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private Transaction transaction = null;
 
     public void saveOrUpdate(Dog dog){
 
@@ -69,6 +70,67 @@ public class DogDao {
             list.addAll(session.createQuery(criteriaQuery).list());
         }catch (HibernateException ex){
             ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Dog> findByAgeBetween(int ageFrom, int ageTo){
+        List<Dog> list = new ArrayList<>();
+
+        try (Session session = sessionFactory.openSession()){
+
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Dog> criteriaQuery = cb.createQuery(Dog.class);
+            Root<Dog> root = criteriaQuery.from(Dog.class);
+
+            criteriaQuery.select(root)
+                    .where(
+                            cb.between(root.get("age"), ageFrom, ageTo)
+                    );
+            list.addAll(session.createQuery(criteriaQuery).list());
+        }catch (HibernateException ex){
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Dog> findByRaceName(Race race){
+        List<Dog> list = new ArrayList<>();
+
+        try (Session session = sessionFactory.openSession()){
+
+            CriteriaBuilder cb  = session.getCriteriaBuilder();
+            CriteriaQuery<Dog> criteriaQuery = cb.createQuery(Dog.class);
+            Root<Dog> root = criteriaQuery.from(Dog.class);
+
+            criteriaQuery.select(root)
+                    .where(
+                            cb.equal(root.get("race"), race)
+                    );
+            list.addAll(session.createQuery(criteriaQuery).list());
+        }catch (HibernateException ex){
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Dog> findByPureRaceAndName(boolean pureRace, String name){
+        List<Dog> list = new ArrayList<>();
+
+        try (Session session = sessionFactory.openSession()){
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Dog> criteriaQuery = criteriaBuilder.createQuery(Dog.class);
+            Root<Dog> root = criteriaQuery.from(Dog.class);
+
+            criteriaQuery.select(root)
+                    .where(
+                            criteriaBuilder.and(
+                            criteriaBuilder.equal(root.get("pureRace"), pureRace),
+                            criteriaBuilder.equal(root.get("name"), name)
+                            )
+                    );
+            list.addAll(session.createQuery(criteriaQuery).list());
         }
         return list;
     }
