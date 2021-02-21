@@ -16,7 +16,8 @@ public class Main {
             System.out.println("Podaj nr polecenia: " +
                     "\n 1.Add \n 2.List \n 3.Delete \n " +
                     "4.Update \n 5.Search by age range " +
-                    "\n 6.Search by race \n 7.Search by pure race and name \n Quit");
+                    "\n 6.Search by race \n 7.Search by pure race and name " +
+                    "\n 8.Search by weight range \n Quit");
             method = scanner.nextLine();
 
             if (method.equalsIgnoreCase("1")){
@@ -39,6 +40,9 @@ public class Main {
             }
             if (method.equalsIgnoreCase("7")){
                 findByPRaceAndName(dao, scanner);
+            }
+            if (method.equalsIgnoreCase("8")){
+                findByWeightBetween(dao, scanner);
             }
 
 
@@ -149,5 +153,16 @@ public class Main {
 
         System.out.println("Znaleziony psy: ");
         dao.findByPureRaceAndName(pureRace, name).forEach(System.out::println);
+    }
+
+    private static void findByWeightBetween(DogDao dao, Scanner scanner){
+        System.out.println("Podaj zakres wagowy: weightFrom weightTo");
+
+        String line = scanner.nextLine();
+        int weightFrom = Integer.parseInt(line.split(" ")[0]);
+        int weightTo = Integer.parseInt(line.split(" ")[1]);
+
+        System.out.println("Zanlezione psy w podanym przedziale wagowym: " + weightFrom + "-" + weightTo);
+        dao.findByWeightBetween(weightFrom, weightTo).forEach(System.out::println);
     }
 }

@@ -3,11 +3,11 @@ package dao;
 import launch.HibernateUtil;
 import model.Dog;
 import model.Race;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
+import org.hibernate.criterion.Order;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.OrderBy;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -74,6 +74,7 @@ public class DogDao {
         return list;
     }
 
+    @OrderBy()
     public List<Dog> findByAgeBetween(int ageFrom, int ageTo){
         List<Dog> list = new ArrayList<>();
 
@@ -86,6 +87,33 @@ public class DogDao {
             criteriaQuery.select(root)
                     .where(
                             cb.between(root.get("age"), ageFrom, ageTo)
+                    )
+                    .orderBy(
+                            cb.asc(root.get("age"))
+                    );
+
+            list.addAll(session.createQuery(criteriaQuery).list());
+        }catch (HibernateException ex){
+            ex.printStackTrace();
+        }
+        return list;
+    }
+
+    public List<Dog> findByWeightBetween(int weightFrom, int weightTo){
+        List<Dog> list = new ArrayList<>();
+
+        try (Session session = sessionFactory.openSession()){
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Dog> criteriaQuery = criteriaBuilder.createQuery(Dog.class);
+            Root<Dog> root = criteriaQuery.from(Dog.class);
+
+            criteriaQuery.select(root)
+                    .where(
+                            criteriaBuilder.between(root.get("weight"), weightFrom, weightTo)
+                    )
+                    .orderBy(
+                            criteriaBuilder.asc(root.get("weight"))
                     );
             list.addAll(session.createQuery(criteriaQuery).list());
         }catch (HibernateException ex){
@@ -129,6 +157,9 @@ public class DogDao {
                             criteriaBuilder.equal(root.get("pureRace"), pureRace),
                             criteriaBuilder.equal(root.get("name"), name)
                             )
+                    )
+                    .orderBy(
+                            criteriaBuilder.asc(root.get("name"))
                     );
             list.addAll(session.createQuery(criteriaQuery).list());
         }
