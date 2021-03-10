@@ -74,7 +74,6 @@ public class DogDao {
         return list;
     }
 
-    @OrderBy()
     public List<Dog> findByAgeBetween(int ageFrom, int ageTo){
         List<Dog> list = new ArrayList<>();
 
@@ -91,7 +90,6 @@ public class DogDao {
                     .orderBy(
                             cb.asc(root.get("age"))
                     );
-
             list.addAll(session.createQuery(criteriaQuery).list());
         }catch (HibernateException ex){
             ex.printStackTrace();
