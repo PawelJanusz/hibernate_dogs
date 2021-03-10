@@ -1,7 +1,4 @@
 
-
-
-
 insert into dog (id, name, age, ownerName, weight, pureRace, race) values (5, 'Adair', 7, 'Doralynn', 6.41, true, 'MOPS');
 insert into dog (id, name, age, ownerName, weight, pureRace, race) values (6, 'Kristopher', 12, 'Cristie', 4.18, false, 'MOPS');
 insert into dog (id, name, age, ownerName, weight, pureRace, race) values (7, 'Alica', 9, 'Jerrilyn', 6.68, false, 'MOPS');
