@@ -20,28 +20,28 @@ public class Main {
                     "\n 8.Search by weight range \n Quit");
             method = scanner.nextLine();
 
-            if (method.equalsIgnoreCase("1")){
+            if (method.equals("1")){
                 addDogs(dao, scanner);
             }
-            if (method.equalsIgnoreCase("2")){
+            if (method.equals("2")){
                 listDogs(dao);
             }
-            if (method.equalsIgnoreCase("3")){
+            if (method.equals("3")){
                 updateDog(dao, scanner);
             }
-            if (method.equalsIgnoreCase("4")){
+            if (method.equals("4")){
                 deleteDog(dao, scanner);
             }
-            if (method.equalsIgnoreCase("5")){
+            if (method.equals("5")){
                 findByAge(dao, scanner);
             }
-            if (method.equalsIgnoreCase("6")){
+            if (method.equals("6")){
                 findByRace(dao, scanner);
             }
-            if (method.equalsIgnoreCase("7")){
+            if (method.equals("7")){
                 findByPRaceAndName(dao, scanner);
             }
-            if (method.equalsIgnoreCase("8")){
+            if (method.equals("8")){
                 findByWeightBetween(dao, scanner);
             }
 
