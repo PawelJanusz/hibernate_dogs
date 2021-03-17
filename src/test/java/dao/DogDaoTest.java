@@ -3,7 +3,11 @@ package dao;
 import model.Dog;
 import model.Race;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -11,7 +15,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DogDaoTest {
 
+    private DogDao dao = new DogDao();
+
+    @BeforeEach
+    void cleanUp(){
+        dao.getAll().clear();
+    }
+
     @Test
+    @Disabled
     void dogShouldBeDeleteFromTheList(){
         //given
         DogDao dao = new DogDao();
@@ -59,6 +71,27 @@ class DogDaoTest {
         Dog dog1 = new Dog(10L, "Burek", 9, "Andrzej", 19, true, Race.CHIHUAHUA);
         //then
         assertEquals(dog, dog1);
+    }
+
+    @Test
+    void dogsShouldBeNotSameByEqualOnlyRace(){
+        //given
+        DogDao dao = new DogDao();
+        //when
+        List<Dog> list = dao.findByRaceName(Race.DACHSHUND);
+        //then
+        assertNotSame(Race.DACHSHUND, list);
+    }
+
+    @Test
+    void dogsShouldBeNotSameByRaceEqualFromList(){
+        //given
+        DogDao dao = new DogDao();
+        //when
+        List<Dog> list1 = dao.findByRaceName(Race.MOPS);
+        List<Dog> list2 = dao.findByRaceName(Race.MOPS);
+        //then
+        assertNotSame(list1, list2);
     }
 
 }
