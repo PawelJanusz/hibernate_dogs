@@ -11,6 +11,7 @@ import javax.persistence.*;
 @ToString
 @RequiredArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Dog {
 
     @Id
