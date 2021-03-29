@@ -23,33 +23,49 @@ class DogDaoTest {
     }
 
     @Test
-    @Disabled
     void dogShouldBeDeleteFromTheList(){
         //given
-        DogDao dao = new DogDao();
-        Dog dog = new Dog(10L, "Burek", 12, "Andrzej", 23, true, Race.BERNARDINE);
+        Dog dog = new Dog("Burek", 12, "Andrzej", 23, true, Race.BERNARDINE);
+        int sizeListBefore = dao.getAll().size();
         //when
-        dao.getAll().add(dog);
+        dao.saveOrUpdate(dog);
         dao.delete(dog);
+        int sizeListAfter = dao.getAll().size();
         //then
-        assertThat(dao.getAll().size(), is(96));
+        assertThat(sizeListAfter, is(sizeListBefore));
     }
 
     @Test
-    void addingDogsShouldBeOnTheList(){
+    void addDogShouldBeOnTheList(){
         //given
-        DogDao dao = new DogDao();
-        Dog dog = new Dog(10L, "Burek", 12, "Andrzej", 23, true, Race.BERNARDINE);
+        Dog dog = new Dog("Burek", 12, "Andrzej", 23, true, Race.BERNARDINE);
+        int sizeListBefore = dao.getAll().size();
         //when
-        dao.getAll().add(dog);
+        dao.saveOrUpdate(dog);
+        int sizeListAfter = dao.getAll().size();
         //then
-        assertThat(dao.getAll().size(), is(97));
+        assertThat(sizeListAfter, is(sizeListBefore + 1));
+    }
+
+    @Test
+    void addManyDogsToTheList(){
+        //given
+        Dog dog1 = new Dog("Max", 3, "Monika", 6, false, Race.MONGREL);
+        Dog dog2 = new Dog("Toffik", 1, "Monika", 3, true, Race.CHIHUAHUA);
+        int sizeListBefore = dao.getAll().size();
+        //when
+        dao.saveOrUpdate(dog1);
+        dao.saveOrUpdate(dog2);
+        int sizeListAfter = dao.getAll().size();
+        //then
+        assertThat(sizeListAfter, is(sizeListBefore + 2));
+
     }
 
     @Test
     void referencesToTheSameObjectShouldBeEqual(){
         //given
-        Dog dog = new Dog(10L, "Burek", 12, "Andrzej", 23, true, Race.BERNARDINE);
+        Dog dog = new Dog("Burek", 12, "Andrzej", 23, true, Race.BERNARDINE);
         Dog dog1 = dog;
         //then
         assertSame(dog, dog1);
@@ -58,8 +74,8 @@ class DogDaoTest {
     @Test
     void referencesToDifferentObjectShouldNotBeEqual(){
         //given
-        Dog dog = new Dog(10L, "Burek", 12, "Andrzej", 23, true, Race.BERNARDINE);
-        Dog dog1 = new Dog(10L, "Burek", 12, "Andrzej", 19, true, Race.BERNARDINE);
+        Dog dog = new Dog("Burek", 12, "Andrzej", 23, true, Race.BERNARDINE);
+        Dog dog1 = new Dog("Burek", 12, "Andrzej", 19, true, Race.BERNARDINE);
         //then
         assertNotSame(dog, dog1);
     }
@@ -67,8 +83,8 @@ class DogDaoTest {
     @Test
     void twoDogsShouldBeEqualWithTheSameParameters(){
         //given
-        Dog dog = new Dog(10L, "Burek", 9, "Andrzej", 19, true, Race.CHIHUAHUA);
-        Dog dog1 = new Dog(10L, "Burek", 9, "Andrzej", 19, true, Race.CHIHUAHUA);
+        Dog dog = new Dog("Burek", 9, "Andrzej", 19, true, Race.CHIHUAHUA);
+        Dog dog1 = new Dog("Burek", 9, "Andrzej", 19, true, Race.CHIHUAHUA);
         //then
         assertEquals(dog, dog1);
     }
@@ -76,7 +92,6 @@ class DogDaoTest {
     @Test
     void dogsShouldBeNotSameByEqualOnlyRace(){
         //given
-        DogDao dao = new DogDao();
         //when
         List<Dog> list = dao.findByRaceName(Race.DACHSHUND);
         //then
@@ -86,12 +101,10 @@ class DogDaoTest {
     @Test
     void dogsShouldBeNotSameByRaceEqualFromList(){
         //given
-        DogDao dao = new DogDao();
         //when
         List<Dog> list1 = dao.findByRaceName(Race.MOPS);
         List<Dog> list2 = dao.findByRaceName(Race.MOPS);
         //then
         assertNotSame(list1, list2);
     }
-
 }
