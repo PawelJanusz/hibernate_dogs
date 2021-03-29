@@ -4,7 +4,6 @@ import model.Dog;
 import model.Race;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -16,10 +15,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class DogDaoTest {
 
     private DogDao dao = new DogDao();
+    private Dog dog = new Dog();
 
     @BeforeEach
     void cleanUp(){
-        dao.getAll().clear();
+        dao.delete(dog);
     }
 
     @Test
