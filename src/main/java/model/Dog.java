@@ -26,4 +26,12 @@ public class Dog {
     @Enumerated(value = EnumType.STRING)
     private Race race;
 
+    public Dog(String name, int age, String ownerName, int weight, boolean pureRace, Race race) {
+        this.name = name;
+        this.age = age;
+        this.ownerName = ownerName;
+        this.weight = weight;
+        this.pureRace = pureRace;
+        this.race = race;
+    }
 }

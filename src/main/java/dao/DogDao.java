@@ -20,6 +20,7 @@ public class DogDao {
 
     private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     private Transaction transaction = null;
+    private List<Dog> list = new ArrayList<>();
 
     public void saveOrUpdate(Dog dog){
 
@@ -57,8 +58,6 @@ public class DogDao {
     }
 
     public List<Dog> getAll(){
-        List<Dog> list = new ArrayList<>();
-
         try (Session session = sessionFactory.openSession()){
 
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -75,8 +74,6 @@ public class DogDao {
     }
 
     public List<Dog> findByAgeBetween(int ageFrom, int ageTo){
-        List<Dog> list = new ArrayList<>();
-
         try (Session session = sessionFactory.openSession()){
 
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -98,8 +95,6 @@ public class DogDao {
     }
 
     public List<Dog> findByWeightBetween(int weightFrom, int weightTo){
-        List<Dog> list = new ArrayList<>();
-
         try (Session session = sessionFactory.openSession()){
 
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -121,8 +116,6 @@ public class DogDao {
     }
 
     public List<Dog> findByRaceName(Race race){
-        List<Dog> list = new ArrayList<>();
-
         try (Session session = sessionFactory.openSession()){
 
             CriteriaBuilder cb  = session.getCriteriaBuilder();
@@ -141,8 +134,6 @@ public class DogDao {
     }
 
     public List<Dog> findByPureRaceAndName(boolean pureRace, String name){
-        List<Dog> list = new ArrayList<>();
-
         try (Session session = sessionFactory.openSession()){
 
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();

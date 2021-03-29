@@ -16,8 +16,8 @@ public class Main {
         String method;
         do {
             System.out.println("Podaj nr polecenia: " +
-                    "\n 1.Add \n 2.List \n 3.Delete \n " +
-                    "4.Update \n 5.Search by age range " +
+                    "\n 1.Add \n 2.List \n 3.Update \n " +
+                    "4.Delete \n 5.Search by age range " +
                     "\n 6.Search by race \n 7.Search by pure race and name " +
                     "\n 8.Search by weight range \n Quit");
             method = scanner.nextLine();
